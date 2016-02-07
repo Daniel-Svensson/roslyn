@@ -145,6 +145,7 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeGeneration
                 AsTypeParameterList(typeParameters),
                 AsParameterList(parameters),
                 default(SyntaxList<TypeParameterConstraintClauseSyntax>),
+                null,
                 hasBody ? CreateBlock(statements) : null,
                 !hasBody ? SyntaxFactory.Token(SyntaxKind.SemicolonToken) : default(SyntaxToken));
         }

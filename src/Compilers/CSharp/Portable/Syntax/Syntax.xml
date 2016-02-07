@@ -2934,6 +2934,7 @@
         <summary>Gets the constraint clause list.</summary>
       </PropertyComment>
     </Field>
+    <Field Name="MethodContract" Type="MethodContractSyntax" Optional="true" />
     <Field Name="Body" Type="BlockSyntax" Optional="true" Override="true"/>
     <Field Name="ExpressionBody" Type="ArrowExpressionClauseSyntax" Optional="true" />
     <Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
@@ -4006,5 +4007,58 @@
       <Kind Name="EndOfDirectiveToken"/>
     </Field>
     <Field Name="IsActive" Type="bool" Override="true"/>
+  </Node>
+  <Node Name="MethodContractSyntax" Base="CSharpSyntaxNode">
+    <Kind Name="MethodContract"/>
+    <Field Name="Requires" Type="SyntaxList&lt;RequiresDeclarationSyntax&gt;">
+      <PropertyComment>
+        <summary>
+          Pre conditions
+        </summary>
+      </PropertyComment>
+    </Field>
+    <Field Name="Ensures" Type="SyntaxList&lt;EnsuresDeclarationSyntax&gt;">
+      <PropertyComment>
+        <summary>
+          Post conditions
+        </summary>
+      </PropertyComment>
+    </Field>
+  </Node>
+  <Node Name="RequiresDeclarationSyntax" Base="CSharpSyntaxNode">
+    <Kind Name="RequiresDeclaration"/>
+    <Field Name="RequiresKeyword" Type="SyntaxToken">
+      <Kind Name="RequiresKeyword"/>
+      <PropertyComment>
+        <summary>
+          Gets a SyntaxToken that represents the requires keyword.
+        </summary>
+      </PropertyComment>
+    </Field>
+    <Field Name="Condition" Type="ExpressionSyntax">
+      <PropertyComment>
+        <summary>
+          Gets an ExpressionSyntax that represents the required condition.
+        </summary>
+      </PropertyComment>
+    </Field>
+  </Node>
+  <Node Name="EnsuresDeclarationSyntax" Base="CSharpSyntaxNode">
+    <Kind Name="EnsuresDeclaration"/>
+    <Field Name="EnsuresKeyword" Type="SyntaxToken">
+      <Kind Name="EnsuresKeyword"/>
+      <PropertyComment>
+        <summary>
+          Gets a SyntaxToken that represents the ensures keyword.
+        </summary>
+      </PropertyComment>
+    </Field>
+    <Field Name="Condition" Type="ExpressionSyntax">
+      <PropertyComment>
+        <summary>
+          Gets an ExpressionSyntax that represents the ensures condition.
+        </summary>
+      </PropertyComment>
+    </Field>
   </Node>
 </Tree>

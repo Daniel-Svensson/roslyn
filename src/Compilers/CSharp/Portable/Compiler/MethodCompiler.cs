@@ -907,6 +907,17 @@ namespace Microsoft.CodeAnalysis.CSharp
 
                 importChain = importChain ?? processedInitializers.FirstImportChain;
 
+                var sourceMemberMethod = methodSymbol as SourceMemberMethodSymbol;
+                if (sourceMemberMethod != null)
+                {
+                    var syntax = sourceMemberMethod.GetSyntax();
+                    var contract = syntax.MethodContract;
+                    if (contract != null)
+                    {
+                        body = MethodContractRewriter.Rewrite(sourceMethod, contract, body, compilationState, diagsForCurrentMethod);
+                    }
+                }
+
                 // Associate these debug imports with all methods generated from this one.
                 compilationState.CurrentImportChain = importChain;
 

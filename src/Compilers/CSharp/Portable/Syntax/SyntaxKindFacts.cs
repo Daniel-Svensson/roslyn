@@ -1076,6 +1076,8 @@ namespace Microsoft.CodeAnalysis.CSharp
                 case SyntaxKind.AsyncKeyword:
                 case SyntaxKind.AwaitKeyword:
                 case SyntaxKind.WhenKeyword:
+                case SyntaxKind.RequiresKeyword:
+                case SyntaxKind.EnsuresKeyword:
                     return true;
                 default:
                     return false;
@@ -1175,6 +1177,10 @@ namespace Microsoft.CodeAnalysis.CSharp
                     return SyntaxKind.WhenKeyword;
                 case "nameof":
                     return SyntaxKind.NameOfKeyword;
+                case "requires":
+                    return SyntaxKind.RequiresKeyword;
+                case "ensures":
+                    return SyntaxKind.EnsuresKeyword;
                 default:
                     return SyntaxKind.None;
             }
@@ -1570,6 +1576,10 @@ namespace Microsoft.CodeAnalysis.CSharp
                     return "await";
                 case SyntaxKind.WhenKeyword:
                     return "when";
+                case SyntaxKind.RequiresKeyword:
+                    return "requires";
+                case SyntaxKind.EnsuresKeyword:
+                    return "ensures";
                 case SyntaxKind.NameOfKeyword:
                     return "nameof";
                 case SyntaxKind.InterpolatedVerbatimStringStartToken:

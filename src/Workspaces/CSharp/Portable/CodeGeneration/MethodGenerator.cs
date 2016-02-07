@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.CodeAnalysis.CodeGeneration;
@@ -85,8 +86,15 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeGeneration
                 typeParameterList: GenerateTypeParameterList(method, options),
                 parameterList: ParameterGenerator.GenerateParameterList(method.Parameters, explicitInterfaceSpecifier != null, options),
                 constraintClauses: GenerateConstraintClauses(method),
+                methodContract: GetMethodContract(method),
                 body: hasNoBody ? null : StatementGenerator.GenerateBlock(method),
                 semicolonToken: hasNoBody ? SyntaxFactory.Token(SyntaxKind.SemicolonToken) : new SyntaxToken()));
+        }
+
+        private static MethodContractSyntax GetMethodContract(IMethodSymbol method)
+        {
+            // TODO: Implement
+            return null;
         }
 
         private static SyntaxList<AttributeListSyntax> GenerateAttributes(

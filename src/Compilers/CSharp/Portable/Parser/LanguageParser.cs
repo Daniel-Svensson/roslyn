@@ -2966,6 +2966,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
                     constraints[0] = this.AddErrorToFirstToken(constraints[0], ErrorCode.ERR_OverrideWithConstraints);
                 }
 
+                var contract = (this.CurrentToken.ContextualKind == SyntaxKind.RequiresKeyword
+                    || this.CurrentToken.ContextualKind == SyntaxKind.EnsuresKeyword) ? 
+                    ParseMethodContract() : null;
+ 
                 _termState = saveTerm;
 
                 BlockSyntax blockBody;
@@ -2992,6 +2996,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
                     typeParameterList,
                     paramList,
                     constraints,
+                    contract,
                     blockBody,
                     expressionBody,
                     semicolon);
@@ -3005,6 +3010,58 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
                     _pool.Free(constraints);
                 }
             }
+        }
+
+        private MethodContractSyntax ParseMethodContract()
+        {
+            var requires = default(SyntaxListBuilder<RequiresDeclarationSyntax>);
+            var ensures = default(SyntaxListBuilder<EnsuresDeclarationSyntax>);
+
+            if (this.CurrentToken.ContextualKind == SyntaxKind.RequiresKeyword)
+            {
+                requires = _pool.Allocate<RequiresDeclarationSyntax>();
+                do
+                {
+                    requires.Add(ParseRequiresDeclarationSyntax());
+                } while (this.CurrentToken.ContextualKind == SyntaxKind.RequiresKeyword);
+            }
+
+            if (this.CurrentToken.ContextualKind == SyntaxKind.EnsuresKeyword)
+            {
+                ensures = _pool.Allocate<EnsuresDeclarationSyntax>();
+                do
+                {
+                    ensures.Add(ParseEnsuresDeclarationSyntax());
+                } while (this.CurrentToken.ContextualKind == SyntaxKind.EnsuresKeyword);
+            }
+
+            // Error on requires after ensures
+            if (this.CurrentToken.ContextualKind == SyntaxKind.RequiresKeyword)
+                {
+                    this.AddErrorToFirstToken(this.CurrentToken, ErrorCode.ERR_UnexpectedToken, this.CurrentToken.Text);
+                }
+
+            return _syntaxFactory.MethodContract(requires, ensures);
+        }
+
+
+        private RequiresDeclarationSyntax ParseRequiresDeclarationSyntax()
+        {
+            Debug.Assert(this.CurrentToken.ContextualKind == SyntaxKind.RequiresKeyword);
+            var requires = this.EatContextualToken(SyntaxKind.RequiresKeyword);
+            var condition = this.ParseExpressionCore();
+            
+            return _syntaxFactory.RequiresDeclaration(requires, condition);
+        }
+
+        
+        private EnsuresDeclarationSyntax ParseEnsuresDeclarationSyntax()
+        {
+            Debug.Assert(this.CurrentToken.ContextualKind == SyntaxKind.EnsuresKeyword);
+            var ensures = this.EatContextualToken(SyntaxKind.EnsuresKeyword);
+            var condition = this.ParseExpressionCore();
+            
+            return _syntaxFactory.EnsuresDeclaration(ensures, condition);
         }
 
         private TypeSyntax ParseReturnType()

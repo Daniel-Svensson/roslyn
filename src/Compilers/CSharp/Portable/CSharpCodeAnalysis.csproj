@@ -380,6 +380,7 @@
     <Compile Include="Lowering\AsyncRewriter\AsyncRewriter.cs" />
     <Compile Include="Lowering\AsyncRewriter\AsyncStateMachine.cs" />
     <Compile Include="Lowering\AsyncRewriter\AwaitExpressionSpiller.cs" />
+    <Compile Include="Lowering\MethodContractRewriter.cs" />
     <Compile Include="Lowering\DiagnosticsPass_ExpressionTrees.cs" />
     <Compile Include="Lowering\DiagnosticsPass_Warnings.cs" />
     <Compile Include="Lowering\Extensions.cs" />

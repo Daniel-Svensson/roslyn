@@ -294,6 +294,36 @@ namespace Microsoft.CodeAnalysis.CSharp
                 typeParameterList,
                 parameterList,
                 constraintClauses,
+                syntax.MethodContract,
+                block,
+                default(ArrowExpressionClauseSyntax),
+                semicolonToken);
+        }
+
+        public static MethodDeclarationSyntax Update(
+            this MethodDeclarationSyntax syntax,
+            SyntaxList<AttributeListSyntax> attributeLists,
+            SyntaxTokenList modifiers,
+            TypeSyntax returnType,
+            ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier,
+            SyntaxToken identifier,
+            TypeParameterListSyntax typeParameterList,
+            ParameterListSyntax parameterList,
+            SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses,
+            MethodContractSyntax methodContract,
+            BlockSyntax block,
+            SyntaxToken semicolonToken)
+        {
+            return syntax.Update(
+                attributeLists,
+                modifiers,
+                returnType,
+                explicitInterfaceSpecifier,
+                identifier,
+                typeParameterList,
+                parameterList,
+                constraintClauses,
+                methodContract,
                 block,
                 default(ArrowExpressionClauseSyntax),
                 semicolonToken);

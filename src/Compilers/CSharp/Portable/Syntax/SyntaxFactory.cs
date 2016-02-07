@@ -2468,6 +2468,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             TypeParameterListSyntax typeParameterList,
             ParameterListSyntax parameterList,
             SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses,
+            MethodContractSyntax methodContract,
             BlockSyntax body,
             SyntaxToken semicolonToken)
         {
@@ -2480,6 +2481,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                 typeParameterList,
                 parameterList,
                 constraintClauses,
+                methodContract,
                 body,
                 default(ArrowExpressionClauseSyntax),
                 semicolonToken);
